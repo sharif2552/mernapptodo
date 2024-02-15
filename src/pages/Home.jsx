@@ -1,40 +1,34 @@
 import React, { useState, useEffect } from "react";
 
 const Home = () => {
-  // State to store todos
   const [todos, setTodos] = useState([]);
-  // State to store new todo text
   const [newTodoText, setNewTodoText] = useState("");
 
-  // Function to fetch all todos
   const fetchTodos = async () => {
     try {
-      const response = await fetch("http://localhost:5000/todos");
+      const response = await fetch("https://merntodolist.vercel.app/todos");
       const fetchedTodos = await response.json();
-      setTodos(fetchedTodos); // Update state with fetched todos
+      setTodos(fetchedTodos);
     } catch (error) {
       console.error("Error fetching todos:", error);
     }
   };
 
-  // Function to delete a todo by its ID
   const deleteTodo = async (id) => {
     try {
-      await fetch(`http://localhost:5000/todos/${id}`, {
+      await fetch(`https://merntodolist.vercel.app/todos/${id}`, {
         method: "DELETE",
       });
-      // Filter out the deleted todo from state
       setTodos(todos.filter((todo) => todo._id !== id));
     } catch (error) {
       console.error("Error deleting todo:", error);
     }
   };
 
-  // Function to handle form submission for adding a new todo
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/todos", {
+      const response = await fetch("https://merntodolist.vercel.app/todos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,21 +36,20 @@ const Home = () => {
         body: JSON.stringify({ text: newTodoText }),
       });
       const newTodo = await response.json();
-      setTodos([...todos, newTodo]); // Add the new todo to state
-      setNewTodoText(""); // Clear the input field after submission
+      setTodos([...todos, newTodo]);
+      setNewTodoText("");
     } catch (error) {
       console.error("Error adding todo:", error);
     }
   };
 
   useEffect(() => {
-    fetchTodos(); // Fetch todos when the component mounts
-  }, []); // Empty dependency array to ensure it only runs once
+    fetchTodos();
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-blue-600 font-extrabold text-8xl mb-3 ">Todo List</h1>
-      {/* Form to add a new todo */}
       <form onSubmit={handleSubmit} className="w-2/4 m-8 flex">
         <input
           type="text"
@@ -65,7 +58,6 @@ const Home = () => {
           onChange={(e) => setNewTodoText(e.target.value)}
           placeholder="Enter new todo"
         />
-
         <button
           type="submit"
           className=" flex flex-col text-center items-center w-1/4 justify-center text-3xl ml-2"
@@ -73,16 +65,13 @@ const Home = () => {
           Add Todo
         </button>
       </form>
-
-      {/* Render todos */}
       <ul>
         {todos.map((todo, index) => (
           <li key={todo._id} className=" text-2xl">
             {index + 1}. {todo.text}{" "}
-            {/* Display the index number followed by a dot */}
             <button onClick={() => deleteTodo(todo._id)}>
               <span className="text-blue-500">
-                <i className="fas fa-trash"></i> {/* Font Awesome trash icon */}
+                <i className="fas fa-trash"></i>
               </span>
             </button>
           </li>
