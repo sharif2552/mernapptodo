@@ -9,7 +9,9 @@ const Home = () => {
   // Function to fetch all todos
   const fetchTodos = async () => {
     try {
-      const response = await fetch("http://localhost:5000/todos");
+      const response = await fetch(
+        "https://adorable-trench-coat-eel.cyclic.app/todos"
+      );
       const fetchedTodos = await response.json();
       setTodos(fetchedTodos); // Update state with fetched todos
     } catch (error) {
@@ -20,7 +22,7 @@ const Home = () => {
   // Function to delete a todo by its ID
   const deleteTodo = async (id) => {
     try {
-      await fetch(`http://localhost:5000/todos/${id}`, {
+      await fetch(`https://adorable-trench-coat-eel.cyclic.app/todos/${id}`, {
         method: "DELETE",
       });
       // Filter out the deleted todo from state
@@ -34,13 +36,16 @@ const Home = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     try {
-      const response = await fetch("http://localhost:5000/todos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text: newTodoText }),
-      });
+      const response = await fetch(
+        "https://adorable-trench-coat-eel.cyclic.app/todos",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ text: newTodoText }),
+        }
+      );
       const newTodo = await response.json();
       setTodos([...todos, newTodo]); // Add the new todo to state
       setNewTodoText(""); // Clear the input field after submission
