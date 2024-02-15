@@ -62,7 +62,7 @@ const Home = () => {
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-blue-600 font-extrabold text-center text-7xl md:text-8xl mb-3 ">Todo List</h1>
       {/* Form to add a new todo */}
-      <form onSubmit={handleSubmit} className="w-2/4 m-8 flex">
+      <form onSubmit={handleSubmit} className="w-4/4 my-8 mx-1 md:w-2/4 md:m-8 flex">
         <input
           type="text"
           className="w-3/4 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 text-black"
